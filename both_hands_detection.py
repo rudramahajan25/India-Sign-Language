@@ -3,7 +3,7 @@ import mediapipe as mp
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-
+#include
 # Function to start hand detection
 def start_detection():
     global cap, camera_running, hands, camera_window
