@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Detection</title>
+</head>
+<body>
+    <h1>Hand Detection</h1>
+    <img id="video-feed" src="" width="640" height="480">
+    <br>
+    <button id="start-button" onclick="startDetection()">Start Detection</button>
+    <button id="stop-button" onclick="stopDetection()" disabled>Stop Detection</button>
+
+    <script>
+        function startDetection() {
+            fetch('/start_detection')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Hand detection started');
+                        document.getElementById('video-feed').src = "{{ url_for('video_feed') }}?" + new Date().getTime(); // Append timestamp
+                        document.getElementById('start-button').disabled = true;
+                        document.getElementById('stop-button').disabled = false;
+                    } else {
+                        console.error('Failed to start hand detection');
+                    }
+                });
+        }
+
+        function stopDetection() {
+            fetch('/stop_detection')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Hand detection stopped');
+                        document.getElementById('video-feed').src = "";
+                        document.getElementById('start-button').disabled = false;
+                        document.getElementById('stop-button').disabled = true;
+                    } else {
+                        console.error('Failed to stop hand detection');
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
